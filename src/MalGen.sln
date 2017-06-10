@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26606.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MalGen.app", "MalGen.app\MalGen.app.csproj", "{56EDFAAA-627D-4B49-A7D8-471889271960}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MalGen.Library", "MalGen.Library\MalGen.Library.csproj", "{93F9DD1A-28B8-4255-A826-F2971F99BCFB}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56EDFAAA-627D-4B49-A7D8-471889271960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56EDFAAA-627D-4B49-A7D8-471889271960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56EDFAAA-627D-4B49-A7D8-471889271960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56EDFAAA-627D-4B49-A7D8-471889271960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93F9DD1A-28B8-4255-A826-F2971F99BCFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93F9DD1A-28B8-4255-A826-F2971F99BCFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93F9DD1A-28B8-4255-A826-F2971F99BCFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93F9DD1A-28B8-4255-A826-F2971F99BCFB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
