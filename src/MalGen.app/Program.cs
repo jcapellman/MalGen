@@ -6,7 +6,6 @@ namespace MalGen.app
     {
         static void Main(string[] args)
         {
-            
         }
     }
 }
