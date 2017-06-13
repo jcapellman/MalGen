@@ -1,5 +1,4 @@
-﻿using MalGen.Library.Interfaces;
-using MalGen.Library.Services;
+﻿using MalGen.Library.Services;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +17,8 @@ namespace MalGen.app
 
         private static void ConfigureServices(IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton<IExceptionService, ExceptionService>();
+            serviceCollection.AddSingleton(new ExceptionService());
+
             serviceCollection.AddTransient<App>();
         }
     }

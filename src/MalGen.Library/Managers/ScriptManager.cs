@@ -1,11 +1,17 @@
 ﻿using System;
 
+using MalGen.Library.Interfaces;
 using MalGen.Library.Objects;
 using MalGen.Library.Objects.Containers;
 
 namespace MalGen.Library.Managers
 {
     public class ScriptManager : BaseManager {
+        public ScriptManager(IExceptionService exceptionService)
+        {
+            this.exceptionService = exceptionService;
+        }
+
         public SetResponse<BaseScript> LoadScript(string name)
         {
             try
@@ -19,6 +25,8 @@ namespace MalGen.Library.Managers
             }
             catch (Exception ex)
             {
+                exceptionService.RecordException(ex);
+
                 return new SetResponse<BaseScript>(ex);
             }
         }
