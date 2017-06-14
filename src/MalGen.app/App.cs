@@ -3,6 +3,7 @@
 using MalGen.app.Enums;
 using MalGen.app.Helpers;
 using MalGen.Library.Interfaces;
+using MalGen.Library.Managers;
 using MalGen.Library.Objects;
 
 namespace MalGen.app
@@ -41,6 +42,17 @@ namespace MalGen.app
                 }
 
                 throw stringResponse.ExceptionObject;
+            }
+            
+            var scriptName = args[0];   // TODO Replace with a real parser
+
+            var scriptManager = new ScriptManager(_exceptionService);
+
+            var script = scriptManager.LoadScript(scriptName);
+
+            if (script.HasError)
+            {
+                throw script.ExceptionObject;
             }
 
             throw new Exception("Not implemented");
