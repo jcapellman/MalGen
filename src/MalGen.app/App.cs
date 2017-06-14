@@ -3,6 +3,7 @@
 using MalGen.app.Enums;
 using MalGen.app.Helpers;
 using MalGen.Library.Interfaces;
+using MalGen.Library.Objects;
 
 namespace MalGen.app
 {
@@ -18,16 +19,14 @@ namespace MalGen.app
         private void Init()
         {
             Console.WriteLine($"{Library.Common.Constants.APP_NAME} {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version} - (Running on {System.Environment.OSVersion})");
-            Console.WriteLine($"(C)2017 Jarred Capellman - use this respnsibly");
+            Console.WriteLine("(C)2017 Jarred Capellman - use this respnsibly");
             Console.WriteLine("-----------------------------------------------");
         }
 
-        public void Run(string[] args)
+        private (BaseScript, string) parseArgument(string[] args)
         {
-            Init();
-            
             var argParser = new ArgumentParser(_exceptionService);
-            
+
             var parserStatus = argParser.ParseArguments(args);
 
             if (parserStatus.HasError || parserStatus.ObjectValue != ARGUMENT_PARSER_STATUS.SUCCESS)
@@ -36,13 +35,22 @@ namespace MalGen.app
 
                 if (!stringResponse.HasError)
                 {
-                   System.Console.WriteLine($"{stringResponse.ObjectValue}{System.Environment.NewLine}");
+                    System.Console.WriteLine($"{stringResponse.ObjectValue}{System.Environment.NewLine}");
+
+                    return (null, null);
                 }
 
-                return;
+                throw stringResponse.ExceptionObject;
             }
 
-            System.Console.ReadKey();
+            throw new Exception("Not implemented");
+        }
+
+        public void Run(string[] args)
+        {
+            Init();
+
+            parseArgument(args);
         }
     }
 }

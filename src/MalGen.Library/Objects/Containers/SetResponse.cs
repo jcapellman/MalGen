@@ -6,9 +6,11 @@ namespace MalGen.Library.Objects.Containers
     {
         public T ObjectValue { get; set; }
 
-        public string ExceptionString { get; set; }
+        public string ExceptionString => ExceptionObject.ToString();
 
-        public bool HasError => !string.IsNullOrEmpty(ExceptionString);
+        public Exception ExceptionObject { get; internal set; }
+
+        public bool HasError => ExceptionObject != null;
 
         public SetResponse(T objectValue)
         {
@@ -17,7 +19,7 @@ namespace MalGen.Library.Objects.Containers
 
         public SetResponse(Exception ex)
         {
-            ExceptionString = ex.ToString();
+            ExceptionObject = ex;
         }
     }
 }
