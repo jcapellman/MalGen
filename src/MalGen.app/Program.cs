@@ -13,7 +13,7 @@ namespace MalGen.app
             ConfigureServices(serviceCollection);
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
-            serviceProvider.GetService<App>().Run();
+            serviceProvider.GetService<App>().Run(args);
         }
 
         private static void ConfigureServices(IServiceCollection serviceCollection)
