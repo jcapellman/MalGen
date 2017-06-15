@@ -4,6 +4,7 @@
     {
         NO_ARGUMENTS,
         MISSING_ARGUMENTS,
-        SUCCESS
+        SUCCESS,
+        TOO_MANY_ARGUMENTS
     }
 }

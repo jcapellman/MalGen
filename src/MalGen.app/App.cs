@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.IO;
 using MalGen.app.Enums;
 using MalGen.app.Helpers;
 using MalGen.Library.Interfaces;
@@ -30,32 +30,35 @@ namespace MalGen.app
 
             var parserStatus = argParser.ParseArguments(args);
 
-            if (parserStatus.HasError || parserStatus.ObjectValue != ARGUMENT_PARSER_STATUS.SUCCESS)
+            if (parserStatus.statusResponse.HasError || parserStatus.statusResponse.ObjectValue != ARGUMENT_PARSER_STATUS.SUCCESS)
             {
-                var stringResponse = argParser.GetStatusString(parserStatus.ObjectValue);
+                var stringResponse = argParser.GetStatusString(parserStatus.statusResponse.ObjectValue);
 
-                if (!stringResponse.HasError)
+                if (stringResponse.HasError)
                 {
-                    System.Console.WriteLine($"{stringResponse.ObjectValue}{System.Environment.NewLine}");
-
-                    return (null, null);
+                    throw stringResponse.ExceptionObject;
                 }
 
-                throw stringResponse.ExceptionObject;
+                System.Console.WriteLine($"{stringResponse.ObjectValue}{System.Environment.NewLine}");
+
+                return (null, null);
             }
             
-            var scriptName = args[0];   // TODO Replace with a real parser
-
             var scriptManager = new ScriptManager(_exceptionService);
 
-            var script = scriptManager.LoadScript(scriptName);
+            var script = scriptManager.LoadScript(parserStatus.scriptName);
 
             if (script.HasError)
             {
                 throw script.ExceptionObject;
             }
 
-            throw new Exception("Not implemented");
+            if (!Directory.Exists(parserStatus.outputName))
+            {
+                Directory.CreateDirectory(parserStatus.outputName);
+            }
+
+            return (script.ObjectValue, parserStatus.outputName);
         }
 
         public void Run(string[] args)

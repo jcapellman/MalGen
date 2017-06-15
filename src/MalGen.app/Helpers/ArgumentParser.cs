@@ -1,6 +1,7 @@
 ﻿using System;
 
 using MalGen.app.Enums;
+
 using MalGen.Library.Interfaces;
 using MalGen.Library.Objects.Containers;
 
@@ -15,19 +16,23 @@ namespace MalGen.app.Helpers
             _exceptionService = exceptionService;
         }
 
-        public SetResponse<ARGUMENT_PARSER_STATUS> ParseArguments(string[] args)
+        public (SetResponse<ARGUMENT_PARSER_STATUS> statusResponse, string scriptName, string outputName) ParseArguments(string[] args)
         {
             if (args == null || args.Length == 0)
             {
-                return new SetResponse<ARGUMENT_PARSER_STATUS>(ARGUMENT_PARSER_STATUS.NO_ARGUMENTS);
+                return (new SetResponse<ARGUMENT_PARSER_STATUS>(ARGUMENT_PARSER_STATUS.NO_ARGUMENTS), null, null);
             }
 
             if (args.Length < 2)
             {
-                return new SetResponse<ARGUMENT_PARSER_STATUS>(ARGUMENT_PARSER_STATUS.MISSING_ARGUMENTS);
+                return (new SetResponse<ARGUMENT_PARSER_STATUS>(ARGUMENT_PARSER_STATUS.MISSING_ARGUMENTS), null, null);
             }
 
-            return new SetResponse<ARGUMENT_PARSER_STATUS>(ARGUMENT_PARSER_STATUS.SUCCESS);
+            if (args.Length > 2)
+            {
+                
+            }
+            return (new SetResponse<ARGUMENT_PARSER_STATUS>(ARGUMENT_PARSER_STATUS.SUCCESS), args[0], args[1]);
         }
 
         public SetResponse<string> GetStatusString(ARGUMENT_PARSER_STATUS argParserStatus)
@@ -39,7 +44,9 @@ namespace MalGen.app.Helpers
                     case ARGUMENT_PARSER_STATUS.NO_ARGUMENTS:
                         return new SetResponse<string>("No arguments provided");
                     case ARGUMENT_PARSER_STATUS.MISSING_ARGUMENTS:
-                        return new SetResponse<string>("-s (Script Template) and -o (Output File) are required arguments");
+                        return new SetResponse<string>("(script name) (output_path)");
+                    case ARGUMENT_PARSER_STATUS.TOO_MANY_ARGUMENTS:
+                        return new SetResponse<string>("Too many arguments");
                 }
 
                 throw new Exception($"{argParserStatus} was not handled");
