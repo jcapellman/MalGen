@@ -50,6 +50,8 @@ namespace MalGen.app
 
             if (script.HasError)
             {
+                System.Console.Write($"Could not load script {parserStatus.scriptName}");
+
                 throw script.ExceptionObject;
             }
 
