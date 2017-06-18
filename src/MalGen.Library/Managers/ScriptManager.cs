@@ -21,7 +21,7 @@ namespace MalGen.Library.Managers
                     throw new Exception($"{Common.Constants.FOLDER_NAME_SCRIPTS}{name} does not exist");
                 }
 
-                return new SetResponse<Script>(Script.LoadScript(GenerateFilePath(Common.Constants.FOLDER_NAME_SCRIPTS, name)));
+                return Script.LoadScript(GenerateFilePath(Common.Constants.FOLDER_NAME_SCRIPTS, name));
             }
             catch (Exception ex)
             {
