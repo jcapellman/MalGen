@@ -12,7 +12,7 @@ namespace MalGen.Library.Managers
             this.exceptionService = exceptionService;
         }
 
-        public SetResponse<BaseScript> LoadScript(string name)
+        public SetResponse<Script> LoadScript(string name)
         {
             try
             {
@@ -21,13 +21,13 @@ namespace MalGen.Library.Managers
                     throw new Exception($"{Common.Constants.FOLDER_NAME_SCRIPTS}{name} does not exist");
                 }
 
-                return null;
+                return new SetResponse<Script>(Script.LoadScript(GenerateFilePath(Common.Constants.FOLDER_NAME_SCRIPTS, name)));
             }
             catch (Exception ex)
             {
                 exceptionService.RecordException(ex);
 
-                return new SetResponse<BaseScript>(ex);
+                return new SetResponse<Script>(ex);
             }
         }
     }

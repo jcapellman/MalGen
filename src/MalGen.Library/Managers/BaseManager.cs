@@ -9,6 +9,9 @@ namespace MalGen.Library.Managers
     {
         protected IExceptionService exceptionService;
 
-        public bool FileExists(string baseDirectory, string fileName) => File.Exists(Path.Combine(AppContext.BaseDirectory, baseDirectory, fileName));
+        public string GenerateFilePath(string baseDirectory, string fileName) => Path.Combine(AppContext.BaseDirectory,
+            baseDirectory, fileName);
+
+        public bool FileExists(string baseDirectory, string fileName) => File.Exists(GenerateFilePath(baseDirectory, fileName));
     }
 }
