@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+
 using MalGen.app.Enums;
 using MalGen.app.Helpers;
+
 using MalGen.Library.Interfaces;
 using MalGen.Library.Managers;
 using MalGen.Library.Objects;
@@ -24,7 +26,7 @@ namespace MalGen.app
             Console.WriteLine("-----------------------------------------------");
         }
 
-        private (BaseScript, string) parseArgument(string[] args)
+        private (Script, string) parseArgument(string[] args)
         {
             var argParser = new ArgumentParser(_exceptionService);
 
