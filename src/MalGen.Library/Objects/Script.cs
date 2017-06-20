@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
-using MalGen.Library.Enums;
+using MalGen.Library.Fields;
 using MalGen.Library.Objects.Containers;
 
 namespace MalGen.Library.Objects
@@ -14,29 +16,31 @@ namespace MalGen.Library.Objects
 
         public SetResponse<List<byte>> CompileScript()
         {
-            return new SetResponse<List<byte>>(parseText());
+            return new SetResponse<List<byte>>(ParseText());
         }
 
-        private List<byte> parseText()
+        private List<byte> ParseText()
         {
+            var data = new List<byte>();
+
             var regex = new Regex("\\{([^}]*)\\}");
             var matches = regex.Matches(_scriptString);
 
+            var fields = Assembly.GetEntryAssembly().GetTypes().Select(t => (BaseField)Activator.CreateInstance(t)).ToList();
+
             foreach (Match match in matches)
             {
-                if (!Enum.TryParse(match.Value, true, out SCRIPT_FIELDS fieldType))
+                var field = fields.FirstOrDefault(a => a.GetFieldName() == match.Value);
+
+                if (field == null)
                 {
                     continue;
                 }
 
-                switch (fieldType)
-                {
-                    case SCRIPT_FIELDS.BASE_EXE:
-                        break;
-                }
+                data.AddRange(field.GetBytes());
             }
 
-            return new List<byte>();
+            return data;
         }
 
         public Script(string scriptString)
